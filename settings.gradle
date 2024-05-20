@@ -1,2 +1,4 @@
 rootProject.name = 'myProject'
-
+include 'api-module'
+include 'service-module'
+include 'common-module'
