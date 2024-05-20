@@ -1,19 +1,115 @@
-plugins {
-    id 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:3.2.5'
+    }
 }
 
-group = 'com.example'
-version = '1.0-SNAPSHOT'
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    mavenCentral()
+    group = 'com.example'
+    version = '1.0.0'
+
+    sourceCompatibility = 17
+
+    compileJava {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenCentral()
+    }
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+/* 하위 모든 모듈 공통 세팅 */
+// setting.gradle 의 include 된 module 를 전부 관리.
+// rootProject 까지 적용하고 싶을때 -> allproject{}
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    // 하위 모듈에서 공통으로 사용하는 세팅 추가 가능
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'com.fasterxml.jackson.core:jackson-databind'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation platform('org.junit:junit-bom:5.10.0')
+        testImplementation 'org.junit.jupiter:junit-jupiter'
+        implementation group: 'org.apache.poi', name: 'poi', version: '5.2.5'
+        implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.5'
+        implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.9.0'
+    }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
 }
 
-test {
-    useJUnitPlatform()
+/* 공통 모듈 */
+// 하위 프로젝트의 의존성 관리.
+// core 의 경우 공통 모듈이므로 apiServer, batchServer 에 의존성을 주입.
+// 의존성 주인 확인 절차 : Gradle -> Dependencies -> compileClasspath
+project(':common-module') {
+    bootJar {enabled = false}
+    jar {enabled = true}
+
+    dependencies {
+    }
+}
+
+project(':api-module') {
+    bootJar {enabled = true}
+    jar {enabled = false}
+
+    dependencies {
+        implementation project(':common-module')   // 컴파일 시 core module 로딩
+        implementation project(':service-module')
+        // Apache POI for Excel
+        implementation 'org.apache.poi:poi:5.2.5'
+        implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    }
+}
+
+project(':service-module') {
+    bootJar {enabled = true}
+    jar {enabled = false}
+
+    dependencies {
+        implementation project(':common-module')   // 컴파일 시 core module 로딩
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        runtimeOnly 'com.mysql:mysql-connector-j'
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    }
 }
