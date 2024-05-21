@@ -1,0 +1,45 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 2px; /* 간격을 작게 조정 */
+    padding: 8px 12px; /* 패딩 조정 */
+    text-decoration: none;
+    color: black;
+    border: 1px solid #ddd;
+    flex: none; /* flexbox에서 크기 고정 */
+}
+
+.pagination a.active {
+    background-color: #4caf50;
+    color: white;
+    border: 1px solid #4caf50;
+}
+
+.pagination a.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
+
+.pagination .nav-btn {
+    width: 40px; /* 네비게이션 버튼의 너비 고정 */
+    text-align: center;
+}

@@ -3,109 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>날씨 조회</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>테스트 공간</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<section class="section">
-    <div class="container">
-        <h1 class="title">날씨 조회</h1>
+<h1>파일을 먼저 업로드</h1>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" id="file" required>
+    <button type="submit">Upload</button>
+</form>
 
-        <div class="box">
-            <h2 class="subtitle">날씨 데이터 저장</h2>
-            <form id="saveWeatherDataForm">
-                <div class="field">
-                    <label class="label">NX</label>
-                    <div class="control">
-                        <input class="input" type="text" name="nx" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">NY</label>
-                    <div class="control">
-                        <input class="input" type="text" name="ny" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Base Date (YYYYMMDD)</label>
-                    <div class="control">
-                        <input class="input" type="text" name="baseDate" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Base Time (HHMM)</label>
-                    <div class="control">
-                        <input class="input" type="text" name="baseTime" required>
-                    </div>
-                </div>
-                <div class="control">
-                    <button class="button is-primary" type="submit">Save Data</button>
-                </div>
-            </form>
-            <div id="saveWeatherDataResult" class="notification is-hidden"></div>
-        </div>
+<h1>Search Data</h1>
+<form id="searchForm">
+    <input type="text" name="query" id="query" placeholder="Enter location" required>
+    <button type="submit">Search</button>
+</form>
 
-        <div class="box">
-            <h2 class="subtitle">일기 예보 받기</h2>
-            <form id="getWeatherForecastForm">
-                <div class="field">
-                    <label class="label">NX</label>
-                    <div class="control">
-                        <input class="input" type="text" name="nx" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">NY</label>
-                    <div class="control">
-                        <input class="input" type="text" name="ny" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Base Date (YYYYMMDD)</label>
-                    <div class="control">
-                        <input class="input" type="text" name="baseDate" required>
-                    </div>
-                </div>
-                <div class="field">
-                    <label class="label">Base Time (HHMM)</label>
-                    <div class="control">
-                        <input class="input" type="text" name="baseTime" required>
-                    </div>
-                </div>
-                <div class="control">
-                    <button class="button is-primary" type="submit">Get Forecast</button>
-                </div>
-            </form>
-            <div id="weatherForecastResult" class="notification is-hidden"></div>
-        </div>
-    </div>
-</section>
+<div id="results"></div>
+<div class="pagination" id="pagination"></div>
 
-<script>
-    $(document).ready(function() {
-        $('#saveWeatherDataForm').submit(function(event) {
-            event.preventDefault();
-            const formData = $(this).serialize();
-
-            $.post('/api/weather/save', formData, function(response) {
-                $('#saveWeatherDataResult').removeClass('is-hidden').addClass('is-success').text(response);
-            }).fail(function(xhr) {
-                $('#saveWeatherDataResult').removeClass('is-hidden').addClass('is-danger').text(xhr.responseText);
-            });
-        });
-
-        $('#getWeatherForecastForm').submit(function(event) {
-            event.preventDefault();
-            const formData = $(this).serialize();
-
-            $.get('/api/weather/forecast', formData, function(response) {
-                $('#weatherForecastResult').removeClass('is-hidden').addClass('is-success').text(response);
-            }).fail(function(xhr) {
-                $('#weatherForecastResult').removeClass('is-hidden').addClass('is-danger').text(xhr.responseText);
-            });
-        });
-    });
-</script>
+<script src="/js/scripts.js"></script>
 </body>
 </html>
