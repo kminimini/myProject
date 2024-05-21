@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc2c11d1-eba2-4e86-b8db-825ae30f549c" name="변경" comment="build setting" />
+    <list default="true" id="cc2c11d1-eba2-4e86-b8db-825ae30f549c" name="변경" comment="open api test">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-module/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/api-module/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-module/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/api-module/src/main/resources/templates/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,6 +105,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {}
@@ -111,9 +116,6 @@
     &quot;accountId&quot;: &quot;1346f272-3d91-42d3-8b5a-f764a409a324&quot;
   }
 }</component>
-  <component name="PerforceDirect.Settings">
-    <option name="CHARSET" value="없음" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -129,7 +131,7 @@
   &quot;keyToString&quot;: {
     &quot;Gradle.myProject:api-module [:api-module:ApiApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;project__build&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;data&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Administrator/Desktop/모음/테스트과제/myProject/service-module/src/main/resources&quot;,
     &quot;project.structure.last.edited&quot;: &quot;프로젝트&quot;,
@@ -177,6 +179,8 @@
       <list>
         <item itemvalue="애플리케이션.ApiApplication" />
         <item itemvalue="애플리케이션.ServiceApplication" />
+        <item itemvalue="애플리케이션.ServiceApplication" />
+        <item itemvalue="애플리케이션.ApiApplication" />
         <item itemvalue="애플리케이션.ApiApplication" />
       </list>
     </recent_temporary>
@@ -214,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716200521341</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="open api test">
+      <option name="closed" value="true" />
+      <created>1716209583586</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716209583586</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -228,7 +240,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="start" />
+                        <option value="data" />
                       </list>
                     </value>
                   </entry>
@@ -244,6 +256,7 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="main branch" />
     <MESSAGE value="build setting" />
-    <option name="LAST_COMMIT_MESSAGE" value="build setting" />
+    <MESSAGE value="open api test" />
+    <option name="LAST_COMMIT_MESSAGE" value="open api test" />
   </component>
 </project>
