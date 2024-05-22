@@ -11,11 +11,9 @@ import java.util.List;
  */
 
 public interface ExcelDataRepositoryCustom {
+    // TODO ExcelData -> 리스트로 반환
     List<ExcelData> findAllExcelData();
 
-    // TODO DB 데이터 검색
-    List<ExcelData> searchByLocation(String query);
-
     // TODO 검색결과 페이지 처리
-    Page<ExcelData> searchByLocationPaged(String query, Pageable pageable);
+    Page<ExcelData> findByLocationContaining(String query, Pageable pageable);
 }

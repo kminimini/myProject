@@ -13,10 +13,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class WeatherServiceImpl implements WeatherService {
 
-    @Value("${openweathermap.api.url}")
+    @Value("${weather.api.url}")
     private String apiUrl;
 
-    @Value("${openweathermap.api.key}")
+    @Value("${weather.api.serviceKey}")
     private String apiKey;
 
     @Autowired
