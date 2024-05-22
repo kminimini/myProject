@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -22,6 +21,7 @@ public class ExcelDataRepositoryImpl implements ExcelDataRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+    // TODO ExcelData -> 리스트로 반환
     @Override
     public List<ExcelData> findAllExcelData() {
         String jpql = "SELECT e FROM ExcelData e";
@@ -29,51 +29,18 @@ public class ExcelDataRepositoryImpl implements ExcelDataRepositoryCustom {
         return query.getResultList();
     }
 
-    // TODO DB 데이터 검색
-    @Override
-    public List<ExcelData> searchByLocation(String query) {
-        String[] searchTerms = query.split("\\s+");
-        StringBuilder jpql = new StringBuilder("SELECT e FROM ExcelData e WHERE ");
-        List<String> conditions = new ArrayList<>();
-
-        for (String term : searchTerms) {
-            conditions.add("(e.firstLevel LIKE :term OR e.secondLevel LIKE :term OR e.thirdLevel LIKE :term)");
-        }
-
-        jpql.append(String.join(" AND ", conditions));
-
-        TypedQuery<ExcelData> typedQuery = entityManager.createQuery(jpql.toString(), ExcelData.class);
-
-        for (String term : searchTerms) {
-            typedQuery.setParameter("term", "%" + term + "%");
-        }
-
-        return typedQuery.getResultList();
-    }
-
     // TODO 검색결과 페이지 처리
     @Override
-    public Page<ExcelData> searchByLocationPaged(String query, Pageable pageable) {
-        String[] searchTerms = query.split("\\s+");
-        StringBuilder jpql = new StringBuilder("SELECT e FROM ExcelData e WHERE ");
-        List<String> conditions = new ArrayList<>();
-
-        for (String term : searchTerms) {
-            conditions.add("(e.firstLevel LIKE :term OR e.secondLevel LIKE :term OR e.thirdLevel LIKE :term)");
-        }
-
-        jpql.append(String.join(" AND ", conditions));
-
-        TypedQuery<ExcelData> typedQuery = entityManager.createQuery(jpql.toString(), ExcelData.class);
-
-        for (String term : searchTerms) {
-            typedQuery.setParameter("term", "%" + term + "%");
-        }
+    public Page<ExcelData> findByLocationContaining(String query, Pageable pageable) {
+        String jpql = "SELECT e FROM ExcelData e WHERE e.firstLevel LIKE :query OR e.secondLevel LIKE :query OR e.thirdLevel LIKE :query";
+        TypedQuery<ExcelData> typedQuery = entityManager.createQuery(jpql, ExcelData.class);
+        typedQuery.setParameter("query", "%" + query + "%");
 
         int totalRows = typedQuery.getResultList().size();
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
 
-        return new PageImpl<>(typedQuery.getResultList(), pageable, totalRows);
+        List<ExcelData> resultList = typedQuery.getResultList();
+        return new PageImpl<>(resultList, pageable, totalRows);
     }
 }

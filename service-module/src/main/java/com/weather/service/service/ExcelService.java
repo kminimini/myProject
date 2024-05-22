@@ -13,9 +13,6 @@ public interface ExcelService {
     // TODO 데이터 저장 제한 해제 사용
     List<ExcelData> getAllExcelData();
 
-    // TODO DB에 저장된 파일 데이터 조회
-    List<ExcelData> searchDataByLocation(String query);
-
     // TODO 페이지별로 검색 결과 반환
     Page<ExcelData> searchDataByLocationPaged(String query, Pageable pageable);
 }
