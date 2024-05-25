@@ -2,12 +2,14 @@ package com.weather.common.utils;
 
 import com.weather.common.model.ExcelData;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Component
 public class ExcelUtils {
 
     private static final Logger logger = Logger.getLogger(ExcelUtils.class.getName());
