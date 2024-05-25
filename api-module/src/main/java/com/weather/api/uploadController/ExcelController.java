@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.apache.poi.ss.usermodel.*;
@@ -76,5 +77,21 @@ public class ExcelController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("firstLevel").ascending());
         Page<ExcelData> data = excelService.searchDataByLocationPaged(query, pageable);
         return ResponseEntity.ok(data);
+    }
+
+    // TODO 단기 예보를 DB에 저장하는 엔드포인트
+    @PostMapping("/saveForecast")
+    public ResponseEntity<String> saveForecastToDatabase(@RequestParam("baseDate") String baseDate,
+                                                         @RequestParam("baseTime") String baseTime,
+                                                         @RequestParam("nx") int nx,
+                                                         @RequestParam("ny") int ny,
+                                                         @RequestParam("serviceKey") String serviceKey) {
+        try {
+            excelService.saveForecastDataToDatabase(baseDate, baseTime, nx, ny, serviceKey);
+            return ResponseEntity.ok("단기 예보를 DB에 저장했습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류가 발생했습니다.");
+        }
     }
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>테스트 공간</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
@@ -22,6 +23,62 @@
 <div id="results"></div>
 <div class="pagination" id="pagination"></div>
 
+<h1>Save Forecast Data to Database</h1>
+<form id="forecastForm">
+    <label for="baseDate">Base Date:</label>
+    <input type="date" id="baseDate" name="baseDate" required><br><br>
+
+    <label for="baseTime">Base Time:</label>
+    <input type="text" id="baseTime" name="baseTime" placeholder="Enter base time" required><br><br>
+
+    <label for="nx">NX:</label>
+    <input type="text" id="nx" name="nx" placeholder="Enter NX value" required><br><br>
+
+    <label for="ny">NY:</label>
+    <input type="text" id="ny" name="ny" placeholder="Enter NY value" required><br><br>
+
+    <button type="submit">Save Forecast Data</button>
+    <p id="forecastMessage"></p> <!-- 예보 데이터 저장 결과를 표시할 곳 -->
+</form>
+
+<script>
+    document.getElementById('forecastForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const baseDate = document.getElementById('baseDate').value;
+        const baseTime = document.getElementById('baseTime').value;
+        const nx = document.getElementById('nx').value;
+        const ny = document.getElementById('ny').value;
+
+        saveForecastToDatabase(baseDate, baseTime, nx, ny);
+    });
+
+    function saveForecastToDatabase(baseDate, baseTime, nx, ny) {
+        fetch('/api/excel/saveForecast', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                baseDate: baseDate,
+                baseTime: baseTime,
+                nx: nx,
+                ny: ny
+            })
+        })
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('forecastMessage').textContent = '예보 데이터가 성공적으로 저장되었습니다.';
+            } else {
+                document.getElementById('forecastMessage').textContent = '예보 데이터 저장에 실패했습니다.';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('forecastMessage').textContent = '예보 데이터 저장 중 오류가 발생했습니다.';
+        });
+    }
+</script>
 <script src="/js/scripts.js"></script>
 </body>
 </html>

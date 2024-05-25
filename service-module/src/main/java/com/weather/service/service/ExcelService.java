@@ -15,4 +15,7 @@ public interface ExcelService {
 
     // TODO 페이지별로 검색 결과 반환
     Page<ExcelData> searchDataByLocationPaged(String query, Pageable pageable);
+
+    // TODO API 호출과 데이터 저장
+    void saveForecastDataToDatabase(String baseDate, String baseTime, int nx, int ny, String serviceKey);
 }
